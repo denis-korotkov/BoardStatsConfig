@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\FieldRepository;
+use App\Repository\GameRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FieldRepository::class)]
-class Field
+#[ORM\Entity(repositoryClass: GameRepository::class)]
+class Game
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,12 +18,12 @@ class Field
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: game::class, inversedBy: 'fields')]
-    private Collection $game;
+    #[ORM\ManyToMany(targetEntity: Field::class, mappedBy: 'game')]
+    private Collection $fields;
 
     public function __construct()
     {
-        $this->game = new ArrayCollection();
+        $this->fields = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,25 +44,28 @@ class Field
     }
 
     /**
-     * @return Collection<int, game>
+     * @return Collection<int, Field>
      */
-    public function getGame(): Collection
+    public function getFields(): Collection
     {
-        return $this->game;
+        return $this->fields;
     }
 
-    public function addGame(game $game): static
+    public function addField(Field $field): static
     {
-        if (!$this->game->contains($game)) {
-            $this->game->add($game);
+        if (!$this->fields->contains($field)) {
+            $this->fields->add($field);
+            $field->addGame($this);
         }
 
         return $this;
     }
 
-    public function removeGame(game $game): static
+    public function removeField(Field $field): static
     {
-        $this->game->removeElement($game);
+        if ($this->fields->removeElement($field)) {
+            $field->removeGame($this);
+        }
 
         return $this;
     }
