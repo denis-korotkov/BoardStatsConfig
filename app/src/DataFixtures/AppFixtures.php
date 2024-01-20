@@ -7,8 +7,8 @@ use App\Entity\Game;
 use App\Repository\GameRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Psr\Log\LoggerInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 
 class AppFixtures extends Fixture implements DependentFixtureInterface
@@ -22,19 +22,28 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->data() as $object) {
-            $field = new Field();
-            $field->setName($object['name']);
-            $field->addGame($object['game']);
-            $manager->persist($field);
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $games = $this->gameRepository->findAll();
+        foreach ($games as $game) {
+            foreach ($this->data() as $object) {
+                $field = new Field();
+                $field->setName($object['name']);
+                $field->addGame($game);
+                $field->setType($object['type']);
+                $field->setPayload($propertyAccessor->getValue($object, '[payload]'));
+                $manager->persist($field);
+            }
         }
         $manager->flush();
     }
 
-    private function data()
+    private function data(): array
     {
         return [
-            ['name' => 'Runebound', 'game' => $this->getGame('Runebound')]
+            ['name' => 'Result', 'type' => 'select', 'payload' => ['values' => ['Lose', 'Win']]],
+            ['name' => 'Date', 'type' => 'date'],
+            ['name' => 'Players', 'type' => 'string'],
+            ['name' => 'Duration',  'type' => 'number'],
         ];
     }
 
@@ -42,7 +51,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         return $this->gameRepository->findOneBy(['name' => $name]);
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             GameFixtures::class,

@@ -18,7 +18,13 @@ class Field
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: game::class, inversedBy: 'fields')]
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $payload = null;
+
+    #[ORM\ManyToMany(targetEntity: Game::class)]
     private Collection $game;
 
     public function __construct()
@@ -43,15 +49,39 @@ class Field
         return $this;
     }
 
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getPayload(): ?array
+    {
+        return $this->payload;
+    }
+
+    public function setPayload(?array $payload): static
+    {
+        $this->payload = $payload;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, game>
+     * @return Collection<int, Game>
      */
     public function getGame(): Collection
     {
         return $this->game;
     }
 
-    public function addGame(game $game): static
+    public function addGame(Game $game): static
     {
         if (!$this->game->contains($game)) {
             $this->game->add($game);
@@ -60,7 +90,7 @@ class Field
         return $this;
     }
 
-    public function removeGame(game $game): static
+    public function removeGame(Game $game): static
     {
         $this->game->removeElement($game);
 
