@@ -16,7 +16,7 @@
 <body>
 {% block body %}
     <div class="mainDiv">
-        <form action="/admin" method="POST">
+        <form action="/admin/{{ game }}" method="POST">
             {% for field in fields %}
                 <div class="form-group">
                     <label for="{{ field.name }}Input">{{ field.name }}</label>
