@@ -21,9 +21,13 @@ class Game
     #[ORM\ManyToMany(targetEntity: Field::class, mappedBy: 'game')]
     private Collection $fields;
 
+    #[ORM\OneToMany(mappedBy: 'game', targetEntity: Result::class)]
+    private Collection $results;
+
     public function __construct()
     {
         $this->fields = new ArrayCollection();
+        $this->results = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,6 +53,14 @@ class Game
     public function getFields(): Collection
     {
         return $this->fields;
+    }
+
+    /**
+     * @return Collection<int, Field>
+     */
+    public function getResults(): Collection
+    {
+        return $this->results;
     }
 
     public function addField(Field $field): static

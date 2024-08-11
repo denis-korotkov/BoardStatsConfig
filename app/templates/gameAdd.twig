@@ -16,25 +16,17 @@
 <body>
 {% block body %}
     <div class="mainDiv">
-        <div class="container">
-            <div class="row fs-4">{{ game }}</div>
-            {% for result in results %}
-            <div class="container">
-
-                <div class="row form-control">
-                    <div>
-                        {% for field in fields %}
-                            <div class="form-group">
-                                <label for="{{ field.name }}">{{ field.name }}:</label>
-                                <label id="{{ field.name }}">{{ result.value[field.name] }}</label>
-                            </div>
-                        {% endfor %}
+        <form action="/{{ game }}" method="POST">
+            {% for field in fields %}
+                <div class="form-group">
+                    <label for="{{ field.name }}Input">{{ field.name }}</label>
+                    <div class="col-sm-5">
+                        <input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.name }}Input">
                     </div>
                 </div>
-                {% endfor %}
-            </div>
-        </div>
-
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 {% endblock %}
 </body>
