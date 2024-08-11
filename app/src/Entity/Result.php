@@ -13,7 +13,7 @@ class Result
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Game::class, inversedBy: 'results')]
     private ?game $game = null;
 
     #[ORM\Column]
