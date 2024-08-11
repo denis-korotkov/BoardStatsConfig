@@ -5,17 +5,12 @@
     <div class="row mainDiv">
         <label>Game</label>
         <div class="col-sm-10">
-            <select class="form-control" name='game' id="gameInput">
+            <select class="form-control" name='game' id="gameInput" onchange="getFields(document.getElementById('gameInput').value)">
                 <option selected hidden> Choose the game</option>
                 {% for game in games %}
                     <option value="{{ game.id }}"> {{ game.name }} </option>
                 {% endfor %}
             </select>
-        </div>
-        <div class="col-sm-5">
-            <button class="btn btn-primary" onclick="getFields(document.getElementById('gameInput').value)">
-                Submit
-            </button>
         </div>
     </div>
 {% endblock %}

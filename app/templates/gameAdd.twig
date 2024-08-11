@@ -3,7 +3,7 @@
 <body>
 {% block body %}
     <div class="mainDiv">
-        <form action="/{{ game }}" method="POST">
+        <form action="/result/{{ game }}" method="POST">
             {% for field in fields %}
                 <div class="form-group">
                     <label for="{{ field.name }}Input">{{ field.name }}</label>
