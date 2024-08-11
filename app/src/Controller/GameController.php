@@ -16,10 +16,4 @@ class GameController extends AbstractController
     {
         return $this->render('game.twig', ['game'=> $game->getName(), 'fields'=> $game->getFields()->toArray(), 'results' => $game->getResults()->toArray()]);
     }
-
-    #[Route('/game/add/{game}', methods: ['GET'])]
-    public function show(Game $game): Response
-    {
-        return $this->render('gameAdd.twig', ['game'=> $game->getId(), 'fields' => $game->getFields()]);
-    }
 }

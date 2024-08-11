@@ -14,6 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResultController extends AbstractController
 {
+    #[Route('/result/{game}', methods: ['GET'])]
+    public function show(Game $game): Response
+    {
+        return $this->render('result.twig', ['game'=> $game->getId(), 'fields' => $game->getFields()]);
+    }
+
     #[Route('/result/{game}', methods: ['POST'])]
     public function post(Request $request, LoggerInterface $logger, Game $game, EntityManagerInterface $entityManager): Response
     {
