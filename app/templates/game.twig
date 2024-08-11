@@ -6,21 +6,21 @@
         <div class="container">
             <div class="row fs-4">{{ game }}</div>
             {% for result in results %}
-            <div class="container">
-
-                <div class="row form-control">
-                    <div>
-                        {% for field in fields %}
-                            <div class="form-group">
-                                <label for="{{ field.name }}">{{ field.name }}:</label>
-                                <label id="{{ field.name }}">{{ result.value[field.name] }}</label>
-                            </div>
-                        {% endfor %}
+                <div class="container">
+                    <div class="row form-control">
+                        <div>
+                            {% for field in fields %}
+                                <div class="form-group">
+                                    <label for="{{ field.name }}">{{ field.name }}:</label>
+                                    <label id="{{ field.name }}">{{ result.value[field.name] }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
+    </div>
 
     </div>
 {% endblock %}
