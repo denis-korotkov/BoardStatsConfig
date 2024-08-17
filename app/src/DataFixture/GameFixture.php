@@ -1,12 +1,12 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixture;
 
 use App\Entity\Game;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class GameFixtures extends Fixture
+class GameFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -21,7 +21,13 @@ class GameFixtures extends Fixture
     private function data()
     {
         return [
-            ['name' => 'Runebound']
+            ['name' => 'Runebound'],
+            ['name' => 'Дурак'],
+            ['name' => 'Nemesis'],
+            ['name' => 'Uno'],
+            ['name' => 'Каркассон'],
+            ['name' => 'Бэнг!'],
+            ['name' => 'Неон'],
         ];
     }
 }
