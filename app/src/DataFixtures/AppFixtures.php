@@ -31,6 +31,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 $field->addGame($game);
                 $field->setType($object['type']);
                 $field->setPayload($propertyAccessor->getValue($object, '[payload]'));
+                $field->setSlug($propertyAccessor->getValue($object, '[slug]'));
                 $manager->persist($field);
             }
         }
@@ -40,10 +41,10 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     private function data(): array
     {
         return [
-            ['name' => 'Result', 'type' => 'select', 'payload' => ['values' => ['Lose', 'Win']]],
-            ['name' => 'Date', 'type' => 'date'],
-            ['name' => 'Players', 'type' => 'string'],
-            ['name' => 'Duration',  'type' => 'number'],
+            ['name' => 'Result', 'type' => 'select', 'payload' => ['values' => ['Lose', 'Win']], 'slug' => 'result'],
+            ['name' => 'Date', 'type' => 'date', 'slug' => 'date' ],
+            ['name' => 'Players', 'type' => 'string', 'slug' => 'players'],
+            ['name' => 'Duration',  'type' => 'number', 'slug' => 'duration'],
         ];
     }
 
