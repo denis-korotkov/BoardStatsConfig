@@ -1,9 +1,9 @@
-<label for="{{ field.name }}Input">{{ field.name }}</label>
+<label for="{{ field.slug }}Input">{{ field.name }}</label>
 {% if result is defined %}
-    <label>{{ field.payload.values[result.value[field.slug]] }}</label>
+    <label id="{{ field.slug }}">{{ field.payload.values[result.value[field.slug]] }}</label>
 {% else %}
     <div class="col-sm-12">
-        <select class="form-control" name="{{ field.slug }}">
+        <select class="form-control" name="{{ field.slug }}" id="{{ field.slug }}">
             {% for key, value in field.payload.values %}
                 <option value="{{ key }}">{{ value }}</option>
             {% endfor %}
