@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Game;
-use App\Entity\Result;
+use App\Repository\ResultRepository;
+use App\Service\FieldValidatorService;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,24 +21,11 @@ class ResultController extends AbstractController
     }
 
     #[Route('/result/{game}', methods: ['POST'])]
-    public function post(Request $request, LoggerInterface $logger, Game $game, EntityManagerInterface $entityManager): Response
+    public function post(Request $request, ResultRepository $resultRepository, Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService): Response
     {
-        $payload = $request->getPayload();
+        $payload = $request->getPayload()->all();
+        $resultRepository->create($game, $entityManager, $fieldValidatorService, $payload);
 
-        //todo сервис для валидации и простваления значений по результатам
-
-        $result = new Result();
-        $result->setGame($game);
-        $result->setValue([
-            'result' => $payload->get('result'),
-            'date' => $payload->get('date'),
-            'players' => $payload->get('players'),
-            'duration' => $payload->get('duration'),
-        ]);
-
-        $entityManager->persist($result);
-        $entityManager->flush();
-
-        return new RedirectResponse('/');
+        return new RedirectResponse("/game/{$game->getId()}");
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Game;
 use App\Entity\Result;
+use App\Service\FieldValidatorService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,5 +36,16 @@ class ResultRepository extends ServiceEntityRepository
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+    }
+
+    public function create(Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService, array $payload){
+        $result = new Result();
+        $result->setGame($game);
+
+        $value = $fieldValidatorService->validate($payload, $game);
+        $result->setValue($value);
+
+        $entityManager->persist($result);
+        $entityManager->flush();
     }
 }
