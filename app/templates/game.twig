@@ -6,7 +6,7 @@
         <div class="col-12 col-sm-6 col-md-4"><h1>{{ game }}</h1></div>
     </div>
     <div class="container">
-        <div class="container">
+        <div class="container" style="margin-bottom: 2em">
             <button type="button" class="btn btn-dark"
                     onclick="location.href = '/result/' + {{ gameId }}">Add result
             </button>
@@ -17,8 +17,7 @@
                     <div>
                         {% for field in fields %}
                             <div class="form-group">
-                                <label for="{{ field.name }}">{{ field.name }}:</label>
-                                <label id="{{ field.name }}">{{ result.value[field.name] }}</label>
+                                {{ include('field/' ~ field.type ~ '.twig') }}
                             </div>
                         {% endfor %}
                     </div>

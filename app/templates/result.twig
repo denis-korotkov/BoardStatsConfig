@@ -6,10 +6,7 @@
         <form action="/result/{{ game }}" method="POST">
             {% for field in fields %}
                 <div class="form-group">
-                    <label for="{{ field.name }}Input">{{ field.name }}</label>
-                    <div class="col-sm-5">
-                        <input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.name }}Input">
-                    </div>
+                    {{ include('field/' ~ field.type ~ '.twig') }}
                 </div>
             {% endfor %}
             <button type="submit" class="btn btn-dark">Submit</button>

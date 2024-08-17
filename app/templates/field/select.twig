@@ -1,0 +1,12 @@
+<label for="{{ field.name }}Input">{{ field.name }}</label>
+{% if result is defined %}
+    <label id="{{ field.name }}">{{ field.payload.values[result.value[field.name]] }}</label>
+{% else %}
+    <div class="col-sm-12">
+        <select class="form-control" name="{{ field.name }}" id="{{ field.name }}Input">
+            {% for key, value in field.payload.values %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endif %}
