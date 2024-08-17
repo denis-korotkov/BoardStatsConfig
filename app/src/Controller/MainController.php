@@ -15,4 +15,10 @@ class MainController extends AbstractController
         $games = $gameRepository->findAll();
         return $this->render('main.twig', ['games' => $games]);
     }
+
+    #[Route('/about', methods: ['GET'])]
+    public function about(): Response
+    {
+        return $this->render('about.twig');
+    }
 }
