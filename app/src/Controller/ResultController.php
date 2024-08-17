@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Repository\ResultRepository;
 use App\Service\FieldValidatorService;
+use App\Service\ResultSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,10 +22,11 @@ class ResultController extends AbstractController
     }
 
     #[Route('/result/{game}', methods: ['POST'])]
-    public function post(Request $request, ResultRepository $resultRepository, Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService): Response
+    public function post(Request $request, ResultRepository $resultRepository, Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService, ResultSerializer $resultSerializer): Response
     {
         $payload = $request->getPayload()->all();
         $resultRepository->create($game, $entityManager, $fieldValidatorService, $payload);
+        $resultSerializer->serialize();
 
         return new RedirectResponse("/game/{$game->getId()}");
     }
