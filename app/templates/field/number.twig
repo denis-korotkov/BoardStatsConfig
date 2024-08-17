@@ -1,9 +1,9 @@
 <label for="{{ field.name }}Input">{{ field.name }}</label>
 {% if result is defined %}
-    <label id="{{ field.name }}">{{ result.value[field.name] }}</label>
+    <label>{{ result.value[field.slug] }}</label>
 {% else %}
     <div class="col-sm-5">
-        <input type="number" name="{{ field.name }}" id="{{ field.name }}Input">
+        <input type="number" name="{{ field.slug }}">
     </div>
 {% endif %}
 

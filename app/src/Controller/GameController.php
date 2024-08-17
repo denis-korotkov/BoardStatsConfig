@@ -14,6 +14,11 @@ class GameController extends AbstractController
     #[Route('/game/{game}', methods: ['GET'])]
     public function get(Request $request, LoggerInterface $logger, Game $game): Response
     {
-        return $this->render('game.twig', ['game' => $game->getName(), 'gameId' => $game->getId(), 'fields' => $game->getFields()->toArray(), 'results' => $game->getResults()->toArray()]);
+        return $this->render('game.twig', [
+            'game' => $game->getName(),
+            'gameId' => $game->getId(),
+            'fields' => $game->getFields()->toArray(),
+            'results' => $game->getResults()->toArray()
+        ]);
     }
 }

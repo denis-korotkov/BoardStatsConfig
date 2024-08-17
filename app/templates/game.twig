@@ -13,7 +13,7 @@
         </div>
         <div class="container">
             {% for result in results %}
-                <div class="row">
+                <div class="row rounded" style="{{ result.value.result ? 'background-color: lightgreen' : 'background-color: lightcoral' }}; margin-bottom: 1em">
                     <div>
                         {% for field in fields %}
                             <div class="form-group">

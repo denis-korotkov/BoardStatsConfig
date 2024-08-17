@@ -30,10 +30,10 @@ class ResultController extends AbstractController
         $result = new Result();
         $result->setGame($game);
         $result->setValue([
-            'Result' => $payload->get('Result'),
-            'Date' => $payload->get('Date'),
-            'Players' => $payload->get('Players'),
-            'Duration' => $payload->get('Duration'),
+            'result' => $payload->get('result'),
+            'date' => $payload->get('date'),
+            'players' => $payload->get('players'),
+            'duration' => $payload->get('duration'),
         ]);
 
         $entityManager->persist($result);
