@@ -26,8 +26,23 @@ class ResultController extends AbstractController
     {
         $payload = $request->getPayload()->all();
         $resultRepository->create($game, $entityManager, $fieldValidatorService, $payload);
-        $resultSerializer->serialize();
 
         return new RedirectResponse("/game/{$game->getId()}");
+    }
+
+    #[Route('/admin/deserialize', methods: ['POST'])]
+    public function deserialize(ResultSerializer $resultSerializer): Response
+    {
+        $resultSerializer->deserialize();
+
+        return new Response("deserialized");
+    }
+
+    #[Route('/admin/serialize', methods: ['POST'])]
+    public function serialize(ResultSerializer $resultSerializer): Response
+    {
+        $resultSerializer->serialize();
+
+        return new Response("serialized");
     }
 }

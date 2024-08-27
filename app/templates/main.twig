@@ -2,14 +2,24 @@
 
 <body>
 {% block body %}
-    <div class="mainDiv">
-        <div class="col-sm-10">
-            <select class="form-control" name='game' id="gameInput" onchange="getFields(document.getElementById('gameInput').value)">
-                <option selected hidden> Choose the game</option>
-                {% for game in games %}
-                    <option value="{{ game.id }}"> {{ game.name }} </option>
-                {% endfor %}
-            </select>
+    <div class="container" style="margin-top: 2em">
+        <div class="row">
+            <div class="col-sm-10">
+                <select class="form-control" name='game' id="gameInput"
+                        onchange="getFields(document.getElementById('gameInput').value)">
+                    <option selected hidden> Choose the game</option>
+                    {% for game in games %}
+                        <option value="{{ game.id }}"> {{ game.name }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <span>Работа с файлом результатов: </span>
+                <button type="button" class="btn btn-warning" onclick="deserializeResults()">Загрузить результаты из файла</button>
+                <button type="button" class="btn btn-warning" onclick="serializeResults()">Выгрузить результаты в файл</button>
+            </div>
         </div>
     </div>
 {% endblock %}
