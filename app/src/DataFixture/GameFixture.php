@@ -13,6 +13,7 @@ class GameFixture extends Fixture
         foreach ($this->data() as $object) {
             $game = new Game();
             $game->setName($object['name']);
+            $game->setSlug($object['slug']);
             $manager->persist($game);
         }
         $manager->flush();
@@ -21,13 +22,13 @@ class GameFixture extends Fixture
     private function data()
     {
         return [
-            ['name' => 'Runebound'],
-            ['name' => 'Дурак'],
-            ['name' => 'Nemesis'],
-            ['name' => 'Uno'],
-            ['name' => 'Каркассон'],
-            ['name' => 'Бэнг!'],
-            ['name' => 'Неон'],
+            ['name' => 'Runebound', 'slug' => 'runebound'],
+            ['name' => 'Дурак', 'slug' => 'durak'],
+            ['name' => 'Nemesis', 'slug' => 'nemesis'],
+            ['name' => 'Uno', 'slug' => 'uno'],
+            ['name' => 'Каркассон', 'slug' => 'carcassonne'],
+            ['name' => 'Бэнг!', 'slug' => 'bang'],
+            ['name' => 'Неон', 'slug' => 'neon'],
         ];
     }
 }

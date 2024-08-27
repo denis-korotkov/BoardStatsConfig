@@ -14,12 +14,14 @@ class Game
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('result')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('result')]
     private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups('result')]
+    private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Field::class, mappedBy: 'game')]
     private Collection $fields;
@@ -83,5 +85,21 @@ class Game
         }
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string|null $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
     }
 }

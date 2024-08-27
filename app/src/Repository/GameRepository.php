@@ -29,4 +29,15 @@ class GameRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findBySlug(string|array $slug): array
+    {
+        $builder = $this->createQueryBuilder('g');
+        if (is_string($slug)) $builder->andWhere('g.slug = :val');
+        else $builder->where('g.slug IN (:val)');
+
+        return $builder->setParameter('val', $slug)
+            ->getQuery()
+            ->execute();
+    }
 }
