@@ -15,7 +15,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class ResultSerializer
 {
-    private readonly string $path;
+    private readonly string $resultsPath;
+    private readonly string $logPath;
 
     public function __construct(
         private readonly ResultRepository       $resultRepository,
@@ -28,7 +29,8 @@ class ResultSerializer
         private readonly FieldValidatorService  $fieldValidatorService,
     )
     {
-        $this->path = $this->appKernel->getLogDir() . "/results.json";
+        $this->resultsPath = $this->appKernel->getLogDir() . "/results.json";
+        $this->logPath = $this->appKernel->getLogDir() . "/" . date("m.d.y") . "/" . date("H:i:s") . ".json";
     }
 
     public function serialize(): bool
@@ -37,7 +39,8 @@ class ResultSerializer
             $results = $this->resultRepository->findAll();
             $jsonContent = $this->serializer->serialize($results, 'json', ['groups' => ['result']]);
 
-            $this->filesystem->dumpFile($this->path, $jsonContent);
+            $this->filesystem->dumpFile($this->resultsPath, $jsonContent);
+            $this->filesystem->dumpFile($this->logPath, $jsonContent);
         } catch (Exception $exception) {
             $this->logger->error($exception);
             return false;
@@ -48,7 +51,7 @@ class ResultSerializer
     public function deserialize(): bool
     {
         try {
-            $jsonContent = file_get_contents($this->path);
+            $jsonContent = file_get_contents($this->resultsPath);
             /** @var Result[] $results */
             $results = $this->serializer->deserialize($jsonContent, Result::class . '[]', 'json');
             $resultGameSlugs = array_map(fn(Result $result) => $result->getGame()->getSlug(), $results);
@@ -58,7 +61,7 @@ class ResultSerializer
                 $game = array_filter($games, fn(Game $game) => $game->getSlug() == $result->getGame()->getSlug());
                 if (empty($game)) throw new Exception('Unknown game');
 
-                $this->resultRepository->create($game[0], $this->entityManager, $this->fieldValidatorService, $result->toArray());
+                $this->resultRepository->createFromArray($game[0], $this->entityManager, $this->fieldValidatorService, $result->getValue());
             }
         } catch (Exception $exception) {
             $this->logger->error($exception);

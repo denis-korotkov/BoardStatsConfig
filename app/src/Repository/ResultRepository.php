@@ -38,7 +38,7 @@ class ResultRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function create(Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService, array $payload){
+    public function createFromArray(Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService, array $payload){
         $result = new Result();
         $result->setGame($game);
 

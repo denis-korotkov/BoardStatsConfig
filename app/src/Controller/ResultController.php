@@ -25,7 +25,7 @@ class ResultController extends AbstractController
     public function post(Request $request, ResultRepository $resultRepository, Game $game, EntityManagerInterface $entityManager, FieldValidatorService $fieldValidatorService, ResultSerializer $resultSerializer): Response
     {
         $payload = $request->getPayload()->all();
-        $resultRepository->create($game, $entityManager, $fieldValidatorService, $payload);
+        $resultRepository->createFromArray($game, $entityManager, $fieldValidatorService, $payload);
 
         return new RedirectResponse("/game/{$game->getId()}");
     }
