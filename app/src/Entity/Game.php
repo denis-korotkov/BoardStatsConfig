@@ -23,13 +23,22 @@ class Game
     #[Groups('result')]
     private ?string $slug = null;
 
+    /**
+     * @var Collection<int, Field>
+     */
     #[ORM\ManyToMany(targetEntity: Field::class, mappedBy: 'game')]
     private Collection $fields;
 
+    /**
+     * @var Collection<int, Result>
+     */
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Result::class)]
     private Collection $results;
 
-    #[ORM\ManyToMany(targetEntity: GameMode::class, mappedBy: 'game')]
+    /**
+     * @var Collection<int, GameMode>
+     */
+    #[ORM\ManyToMany(targetEntity: GameMode::class, mappedBy: 'games')]
     private Collection $gameModes;
 
     public function __construct()
@@ -65,7 +74,7 @@ class Game
     }
 
     /**
-     * @return Collection<int, Field>
+     * @return Collection<int, Result>
      */
     public function getResults(): Collection
     {
@@ -92,7 +101,7 @@ class Game
     }
 
     /**
-     * @return Collection<int, Field>
+     * @return Collection<int, GameMode>
      */
     public function getGameModes(): Collection
     {
