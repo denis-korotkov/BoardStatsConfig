@@ -29,10 +29,14 @@ class Game
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Result::class)]
     private Collection $results;
 
+    #[ORM\ManyToMany(targetEntity: GameMode::class, mappedBy: 'game')]
+    private Collection $gameModes;
+
     public function __construct()
     {
         $this->fields = new ArrayCollection();
         $this->results = new ArrayCollection();
+        $this->gameModes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +86,33 @@ class Game
     {
         if ($this->fields->removeElement($field)) {
             $field->removeGame($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Field>
+     */
+    public function getGameModes(): Collection
+    {
+        return $this->gameModes;
+    }
+
+    public function addGameMode(GameMode $gameMode): static
+    {
+        if (!$this->gameModes->contains($gameMode)) {
+            $this->gameModes->add($gameMode);
+            $gameMode->addGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGameMode(GameMode $gameMode): static
+    {
+        if ($this->gameModes->removeElement($gameMode)) {
+            $gameMode->removeGame($this);
         }
 
         return $this;
