@@ -8,7 +8,7 @@ function deserializeResults(){
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).then(r => console.log('deserialized'));
+    }).then(r => alert('Deserialized'));
 }
 
 function serializeResults(){
@@ -17,5 +17,5 @@ function serializeResults(){
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    }).then(r => console.log('serialized'));
+    }).then(r => alert('Serialized'));
 }
