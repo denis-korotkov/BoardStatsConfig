@@ -43,18 +43,22 @@ class FieldFixture extends Fixture implements DependentFixtureInterface
     private function data(): array
     {
         return [
-            ['name' => 'Result', 'type' => 'select', 'payload' => ['values' => ['Lose', 'Win', 'Winner'], 'isBasic' => 1], 'slug' => 'result'],
+            ['name' => 'Result', 'type' => 'select', 
+            'payload' => ['valuesType' => 'array', 'values' => ['Lose', 'Win', 'Winner'], 'isBasic' => 1], 
+            'slug' => 'result'],
+
             ['name' => 'Date', 'type' => 'date', 'payload' => ['isBasic' => 1], 'slug' => 'date'],
             ['name' => 'Players', 'type' => 'array', 'payload' => ['isBasic' => 1], 'slug' => 'players'],
             ['name' => 'Duration', 'type' => 'number', 'payload' => ['isBasic' => 1], 'slug' => 'duration'],
 
-            ['name' => 'Game mode', 'type' => 'select', 'payload' => ['valuesType' => 'array', 'valuesArray' => 'gameMode', 'isBasic' => 1], 'slug' => 'gameMode'],
+            ['name' => 'Game mode', 'type' => 'select', 
+            'payload' => ['valuesType' => 'relation', 'values' => 'gameMode', 'isBasic' => 1], 
+            'slug' => 'gameMode'],
 
-            ['name' => 'Characters', 'type' => 'map',
-                'payload' => ['keysType' => 'field', 'keysField' => 'Players', 'valuesType' => 'array', 'valuesArray' => 'characters'],
-                'slug' => 'characters',
-                'games' => $this->gameRepository->findBySlug(['nemesis', 'runebound', 'neon', 'bang']),
-            ],
+            // ['name' => 'Characters', 'type' => 'map',
+            //     'payload' => ['keysType' => 'field', 'keysField' => 'Players', 'valuesType' => 'relation', 'values' => 'characters'],
+            //     'slug' => 'characters',
+            // ],
         ];
     }
 

@@ -17,15 +17,16 @@ class FieldService
     {
         $fields = $game->getFields();
         return $fields->map(function (Field $field) use ($game) {
-            if ($field->getSlug() == 'gameMode') {
                 $fieldPayload = $field->getPayload();
-                if ($fieldPayload['valuesType'] == 'array') {
-                    foreach ($game->getGameModes() as $gameMode) {
-                        $fieldPayload['values'][$gameMode->getSlug()] = $gameMode->getName();
+                if (array_key_exists('valuesType', $fieldPayload) && $fieldPayload['valuesType'] == 'relation') {
+                    if ($fieldPayload['values'] == 'gameMode') {
+                        $fieldPayload['values'] = [];
+                        foreach ($game->getGameModes() as $gameMode) {
+                            $fieldPayload['values'][$gameMode->getSlug()] = $gameMode->getName();
+                        }
                     }
+                    $field->setPayload($fieldPayload);
                 }
-                $field->setPayload($fieldPayload);
-            }
             return $field;
         });
     }

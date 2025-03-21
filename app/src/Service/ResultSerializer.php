@@ -30,7 +30,7 @@ class ResultSerializer
     )
     {
         $this->resultsPath = $this->appKernel->getLogDir() . "/results.json";
-        $this->logPath = $this->appKernel->getLogDir() . "/" . date("m.d.y") . "/" . date("H:i:s") . ".json";
+        $this->logPath = $this->appKernel->getLogDir() . "/" . date("d.m.y") . "/" . date("H:i:s") . ".json";
     }
 
     public function serialize(): bool
