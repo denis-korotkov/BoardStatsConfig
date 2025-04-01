@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,9 +42,7 @@ class SignupController extends AbstractController
             $payload['password']
         );
         $user->setPassword($hashedPassword);
-
-        $role = $entityManager->getRepository(Role::class)->findOneBy(['role' => 'ROLE_USER']);
-        $user->setRole($role);
+        $user->setRole('ROLE_USER');
 
         $entityManager->persist($user);
         $entityManager->flush();
