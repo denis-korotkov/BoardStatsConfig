@@ -13,7 +13,7 @@ class RoleFixture extends Fixture
     {
         foreach ($this->data() as $object) {
             $role = new Role();
-            $role->setRole($object['name']);
+            $role->setRole($object['role']);
             $manager->persist($role);
         }
         $manager->flush();
