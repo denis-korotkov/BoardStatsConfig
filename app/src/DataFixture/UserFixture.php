@@ -2,27 +2,20 @@
 
 namespace App\DataFixture;
 
-use App\Entity\GameMode;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-
 class UserFixture extends Fixture
 {
-    public function getDependencies(): array
-    {
-        return [
-            RoleFixture::class,
-        ];
-    }
-
     public function load(ObjectManager $manager): void
     {
         foreach ($this->data() as $object) {
-            $gameMode = new GameMode();
-            $gameMode->setName($object['name']);
-            $gameMode->setSlug($object['slug']);
-            $manager->persist($gameMode);
+            $user = new User();
+            $user->setName($object['name']);
+            $user->setPassword($object['password']);
+            $user->setRole($object['role']);
+            $manager->persist($user);
         }
         $manager->flush();
     }
@@ -30,8 +23,7 @@ class UserFixture extends Fixture
     private function data(): array
     {
         return [
-            ['name' => 'Team win', 'slug' => 'teamWin'],
-            ['name' => 'Player win', 'slug' => 'playerWin'],
+            ['name' => 'denis', 'password' => '$2y$13$cFo2OGdP2IvsNqhvVWzOr.65e3nHQetKCklyQlC9nXhKGWSVCVfzi', 'role' => 'ROLE_USER'],
         ];
     }
 }

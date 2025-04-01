@@ -21,9 +21,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Role $role_id = null;
+    #[ORM\Column(length: 255)]
+    private string $role;
 
     public function getId(): ?int
     {
@@ -54,14 +53,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoleId(): ?Role
+    public function getRole(): string
     {
-        return $this->role_id;
+        return $this->role;
     }
 
-    public function setRoleId(?Role $role_id): static
+    public function setRole(string $role): static
     {
-        $this->role_id = $role_id;
+        $this->role = $role;
 
         return $this;
     }
@@ -73,7 +72,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return [$this->getRoleId()];
+        return [$this->getRole()];
     }
 
     public function eraseCredentials(): void
