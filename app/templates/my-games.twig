@@ -1,0 +1,16 @@
+{{ include('base.twig') }}
+
+{% block body %}
+	<div class="mainDiv">
+		<div class="col-12 col-sm-6 col-md-4">
+			<h1>Последние игры:</h1>
+		</div>
+	</div>
+	<div class="container">
+		{% for game in games %}
+			<div class="container">
+				{{ include('unit.result.twig', { game: game.name, gameId: game.gameId, results: game.results }) }}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
