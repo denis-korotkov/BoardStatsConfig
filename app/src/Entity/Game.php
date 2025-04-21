@@ -41,6 +41,12 @@ class Game
     #[ORM\ManyToMany(targetEntity: GameMode::class, mappedBy: 'games')]
     private Collection $gameModes;
 
+    /**
+     * @var Collection<int, Player>
+     */
+    #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'games')]
+    private Collection $players;
+
     public function __construct()
     {
         $this->fields = new ArrayCollection();
@@ -108,6 +114,14 @@ class Game
         return $this->gameModes;
     }
 
+    /**
+     * @return Collection<int, User>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
     public function addGameMode(GameMode $gameMode): static
     {
         if (!$this->gameModes->contains($gameMode)) {
@@ -122,6 +136,25 @@ class Game
     {
         if ($this->gameModes->removeElement($gameMode)) {
             $gameMode->removeGame($this);
+        }
+
+        return $this;
+    }
+
+    public function addPlayer(Player $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->addGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            $player->removeGame($this);
         }
 
         return $this;
