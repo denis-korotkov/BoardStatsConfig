@@ -2,23 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Game;
-use App\Service\FieldService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserController extends AbstractController
 {
     #[Route('/my-games', methods: ['GET'])]
-    public function get(Request $request, Game $game, FieldService $fieldService): Response
+    public function get(Request $request, UserInterface $user): Response
     {
+        $player = $user->getPlayer();
         return $this->render('game.twig', [
-            'game' => $game->getName(),
-            'gameId' => $game->getId(),
-            'fields' => $fieldService->getFields($game),
-            'results' => $game->getResults()->toArray()
+            'games' => $player->getGames(),
         ]);
     }
 }

@@ -48,7 +48,11 @@ class FieldFixture extends Fixture implements DependentFixtureInterface
             'slug' => 'result'],
 
             ['name' => 'Date', 'type' => 'date', 'payload' => ['isBasic' => 1], 'slug' => 'date'],
-            ['name' => 'Players', 'type' => 'array', 'payload' => ['isBasic' => 1], 'slug' => 'players'],
+            
+            ['name' => 'Players', 'type' => 'select', 
+            'payload' => ['valuesType' => 'relation', 'values' => 'player', 'isBasic' => 1],
+            'slug' => 'players'],
+
             ['name' => 'Duration', 'type' => 'number', 'payload' => ['isBasic' => 1], 'slug' => 'duration'],
 
             ['name' => 'Game mode', 'type' => 'select', 

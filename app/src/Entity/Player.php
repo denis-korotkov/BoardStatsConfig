@@ -17,10 +17,7 @@ class Player
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, Game>
-     */
-    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'players')]
+    #[ORM\ManyToMany(targetEntity: Game::class)]
     private Collection $games;
 
     #[ORM\OneToOne(inversedBy: 'player', cascade: ['persist', 'remove'])]

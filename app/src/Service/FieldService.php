@@ -20,10 +20,14 @@ class FieldService
                 $fieldPayload = $field->getPayload();
                 if (array_key_exists('valuesType', $fieldPayload) && $fieldPayload['valuesType'] == 'relation') {
                     if ($fieldPayload['values'] == 'gameMode') {
-                        $fieldPayload['values'] = [];
-                        foreach ($game->getGameModes() as $gameMode) {
-                            $fieldPayload['values'][$gameMode->getSlug()] = $gameMode->getName();
-                        }
+                        $fieldPayload['values'] = $game->getGameModes()->map(function ($gameMode) {
+                            return $gameMode->getName();
+                        })->toArray();
+                    }
+                    if ($fieldPayload['values'] == 'player') {
+                        $fieldPayload['values'] = $game->getPlayers()->map(function ($player) {
+                            return $player->getName();
+                        })->toArray();
                     }
                     $field->setPayload($fieldPayload);
                 }
