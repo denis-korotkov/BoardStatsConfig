@@ -26,7 +26,7 @@ class Game
     /**
      * @var Collection<int, Field>
      */
-    #[ORM\ManyToMany(targetEntity: Field::class, mappedBy: 'game')]
+    #[ORM\ManyToMany(targetEntity: Field::class, mappedBy: 'games')]
     private Collection $fields;
 
     /**

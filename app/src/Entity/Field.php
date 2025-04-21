@@ -28,11 +28,11 @@ class Field
     private ?array $payload = null;
 
     #[ORM\ManyToMany(targetEntity: Game::class)]
-    private Collection $game;
+    private Collection $games;
 
     public function __construct()
     {
-        $this->game = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,15 +91,15 @@ class Field
     /**
      * @return Collection<int, Game>
      */
-    public function getGame(): Collection
+    public function getGames(): Collection
     {
-        return $this->game;
+        return $this->games;
     }
 
     public function addGame(Game $game): static
     {
-        if (!$this->game->contains($game)) {
-            $this->game->add($game);
+        if (!$this->games->contains($game)) {
+            $this->games->add($game);
         }
 
         return $this;
@@ -107,7 +107,7 @@ class Field
 
     public function removeGame(Game $game): static
     {
-        $this->game->removeElement($game);
+        $this->games->removeElement($game);
 
         return $this;
     }
